@@ -32,7 +32,10 @@ class ViewController: UIViewController {
         node.geometry = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0.03)
         node.geometry?.firstMaterial?.specular.contents = UIColor.red
         node.geometry?.firstMaterial?.diffuse.contents = UIColor.purple
-        node.position = SCNVector3(0,0,-0.3)
+        let x = randomNumbers(firstNum: -0.3, secondNum: 0.3)
+        let y = randomNumbers(firstNum: -0.3, secondNum: 0.3)
+        let z = randomNumbers(firstNum: -0.3, secondNum: 0.3)
+        node.position = SCNVector3(x,y,z)
         self.ARKitView.scene.rootNode.addChildNode(node)
     }
     
@@ -46,6 +49,11 @@ class ViewController: UIViewController {
         { (node, _) in node.removeFromParentNode()
         }
         self.ARKitView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+    }
+    
+    func randomNumbers(firstNum: CGFloat, secondNum: CGFloat) -> CGFloat {
+        return CGFloat(arc4random()) / CGFloat(UINT32_MAX) * abs(firstNum - secondNum) +
+        min(firstNum, secondNum)
     }
     
 }
