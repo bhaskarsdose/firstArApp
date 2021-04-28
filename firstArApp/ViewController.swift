@@ -19,16 +19,19 @@ class ViewController: UIViewController {
     }
     
     @IBAction func ARstart(_ sender: Any) {
+        self.ARKitView.showsStatistics = true // this shows FPS on the bottom.
         self.ARKitView.debugOptions = [ARSCNDebugOptions.showFeaturePoints,
                                        ARSCNDebugOptions.showWorldOrigin,
                                        ARSCNDebugOptions.showCreases]
         self.ARKitView.session.run(configuration)
+        self.ARKitView.autoenablesDefaultLighting = true
     }
     
     @IBAction func add(_ sender: Any) {
         let node = SCNNode()
-        node.geometry = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0)
-        node.geometry?.firstMaterial?.diffuse.contents = UIColor.systemTeal
+        node.geometry = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0.03)
+        node.geometry?.firstMaterial?.specular.contents = UIColor.red
+        node.geometry?.firstMaterial?.diffuse.contents = UIColor.purple
         node.position = SCNVector3(0,0,-0.3)
         self.ARKitView.scene.rootNode.addChildNode(node)
     }
